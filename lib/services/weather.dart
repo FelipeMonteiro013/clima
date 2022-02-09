@@ -6,11 +6,9 @@ const openWeatherMap = 'https://api.openweathermap.org/data/2.5/weather';
 
 class WeatherModel {
   Future<dynamic> getCityWeather(String cityName) async {
-    String url = '$openWeatherMap?q=$cityName&appid=$key&units=metric';
+    NetworkData networkData =
+        NetworkData('$openWeatherMap?q=$cityName&appid=$key&units=metric');
 
-    print(url);
-
-    NetworkData networkData = NetworkData(url);
     var weatherData = await networkData.getNetworkData();
 
     return weatherData;

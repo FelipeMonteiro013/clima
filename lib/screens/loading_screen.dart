@@ -11,10 +11,13 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  late double latitude;
-  late double longitude;
+  @override
+  void initState() {
+    super.initState();
+    getLocation();
+  }
 
-  void getPermission() async {
+  void getLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -31,36 +34,23 @@ class _LoadingScreenState extends State<LoadingScreen> {
       }
     }
 
-    getLocation();
-  }
-
-  void getLocation() async {
     var weatherData = await WeatherModel().getLocationWeather();
 
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: ((context) {
-          return LocationScreen(
-            weatherData: weatherData,
-          );
-        }),
-      ),
+      MaterialPageRoute(builder: (context) {
+        return LocationScreen(
+          weatherData: weatherData,
+        );
+      }),
     );
-  }
-
-  @override
-  void initState() {
-    getPermission();
-
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SpinKitRing(
+        child: SpinKitDoubleBounce(
           color: Colors.white,
           size: 100.0,
         ),
